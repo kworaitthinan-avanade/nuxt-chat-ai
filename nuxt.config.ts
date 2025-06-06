@@ -3,6 +3,13 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+      ]
+    }
+  },
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
@@ -10,6 +17,11 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+  },
+    vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag === 'deep-chat',
+    },
   },
   modules: [
     'shadcn-nuxt',
@@ -24,5 +36,12 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './components/ui'
-  }
+  },
+  runtimeConfig: {
+    public: {
+      azureOpenaiUrl: process.env.AZURE_OPENAI_URL,
+      azureOpenaiModel: process.env.AZURE_OPENAI_MODEL,
+    },
+    azureOpenaiApiKey: process.env.AZURE_OPENAI_API_KEY,
+  },
 });
